@@ -6,54 +6,74 @@
 <title>Cleveland Orchestra Chorus — Performance History</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #1a1208; --paper: #faf7f2; --cream: #f0ead8; --gold: #b8942a; --gold-light: #e8d5a0; --rust: #8b3a1f; --muted: #7a6e5f; --border: #d8cdb8; --white: #ffffff; }
+  :root {
+    --ink: #0f0e0e;
+    --paper: #ede8e3;
+    --cream: #e0d8d1;
+    --teal: #3fb9c8;
+    --teal-dark: #2a8a96;
+    --teal-light: #c8eef2;
+    --magenta: #990156;
+    --magenta-light: #f0d0e4;
+    --orange: #c97721;
+    --muted: #7a7068;
+    --border: #cec5bc;
+    --white: #faf7f4;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
-  header { background: var(--ink); color: var(--paper); padding: 2.5rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
-  header::before { content: ''; position: absolute; top:0;left:0;right:0;bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(184,148,42,0.06) 40px,rgba(184,148,42,0.06) 41px); pointer-events: none; }
-  .header-ornament { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 300; margin-bottom: 0.5rem; }
+
+  header { background: var(--ink); color: var(--white); padding: 2.5rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top:0;left:0;right:0;bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(63,185,200,0.05) 40px,rgba(63,185,200,0.05) 41px); pointer-events: none; }
+  .header-ornament { color: var(--teal); font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 300; margin-bottom: 0.5rem; }
   header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 400; line-height: 1.2; }
-  header h1 em { color: var(--gold-light); font-style: italic; }
-  .header-sub { margin-top: 0.5rem; color: #a09070; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; }
-  .dashboard { background: var(--ink); border-top: 1px solid rgba(184,148,42,0.3); padding: 1.5rem 2rem; }
-  .dashboard-label { text-align: center; color: #a09070; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+  header h1 em { color: var(--teal-light); font-style: italic; }
+  .header-sub { margin-top: 0.5rem; color: #888; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .dashboard { background: var(--ink); border-top: 1px solid rgba(63,185,200,0.25); padding: 1.5rem 2rem; }
+  .dashboard-label { text-align: center; color: #666; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
   .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; max-width: 780px; margin: 0 auto; }
-  .stat-card { text-align: center; padding: 1rem 0.75rem; border: 1px solid rgba(184,148,42,0.2); border-radius: 4px; background: rgba(255,255,255,0.03); transition: border-color 0.2s; }
-  .stat-card:hover { border-color: rgba(184,148,42,0.5); }
-  .stat-number { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); line-height: 1; display: block; margin-bottom: 0.25rem; }
-  .stat-label { font-size: 0.7rem; color: #a09070; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.3; }
-  .stat-note { font-size: 0.65rem; color: rgba(184,148,42,0.7); margin-top: 0.3rem; font-style: italic; }
-  .search-bar { background: var(--cream); border-bottom: 1px solid var(--border); padding: 1.25rem 1.5rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(26,18,8,0.08); }
+  .stat-card { text-align: center; padding: 1rem 0.75rem; border: 1px solid rgba(63,185,200,0.2); border-radius: 4px; background: rgba(255,255,255,0.03); transition: border-color 0.2s; }
+  .stat-card:hover { border-color: rgba(63,185,200,0.5); }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--teal-light); line-height: 1; display: block; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.3; }
+  .stat-note { font-size: 0.65rem; color: var(--teal); margin-top: 0.3rem; font-style: italic; opacity: 0.8; }
+
+  .search-bar { background: var(--cream); border-bottom: 1px solid var(--border); padding: 1.25rem 1.5rem; display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(15,14,14,0.08); }
   .search-input-wrap { position: relative; flex: 1; min-width: 220px; }
   .search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--muted); }
   .search-bar input[type="text"] { width: 100%; padding: 0.6rem 0.75rem 0.6rem 2.25rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); transition: border-color 0.2s; }
-  .search-bar input[type="text"]:focus { outline: none; border-color: var(--gold); }
-  .search-bar select { padding: 0.6rem 2rem 0.6rem 0.75rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a6e5f'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; transition: border-color 0.2s; min-width: 140px; }
-  .search-bar select:focus { outline: none; border-color: var(--gold); }
+  .search-bar input[type="text"]:focus { outline: none; border-color: var(--teal); }
+  .search-bar select { padding: 0.6rem 2rem 0.6rem 0.75rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--ink); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7068'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; transition: border-color 0.2s; min-width: 140px; }
+  .search-bar select:focus { outline: none; border-color: var(--teal); }
   .btn-clear { padding: 0.6rem 1rem; background: transparent; border: 1.5px solid var(--border); border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-  .btn-clear:hover { border-color: var(--rust); color: var(--rust); }
-  .btn-csv { padding: 0.6rem 1rem; background: transparent; border: 1.5px solid var(--gold); border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--gold); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-  .btn-csv:hover { background: var(--gold); color: var(--ink); }
+  .btn-clear:hover { border-color: var(--ink); color: var(--ink); }
+
   .results-meta { padding: 0.85rem 1.5rem; font-size: 0.8rem; color: var(--muted); border-bottom: 1px solid var(--border); background: var(--paper); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
   .results-meta strong { color: var(--ink); }
   .meta-controls { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
   .meta-label { font-size: 0.78rem; color: var(--muted); }
-  .meta-select { padding: 0.3rem 1.6rem 0.3rem 0.5rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--ink); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%237a6e5f'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.4rem center; }
-  .meta-select:focus { outline: none; border-color: var(--gold); }
+  .meta-select { padding: 0.3rem 1.6rem 0.3rem 0.5rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--ink); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%237a7068'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.4rem center; }
+  .meta-select:focus { outline: none; border-color: var(--teal); }
   .view-toggle { display: flex; gap: 0.4rem; }
+  .view-btn { background: none; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.3rem 0.6rem; cursor: pointer; color: var(--muted); font-size: 0.8rem; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .view-btn.active { background: var(--ink); border-color: var(--ink); color: var(--teal-light); }
   .meta-pipe { color: var(--border); font-size: 0.9rem; margin: 0 2px; }
-  .view-btn { background: none; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.3rem 0.6rem; cursor: pointer; color: var(--muted); font-size: 0.8rem; transition: all 0.15s; }
-  .view-btn.active { background: var(--ink); border-color: var(--ink); color: var(--gold-light); }
+  .btn-csv { padding: 0.3rem 0.7rem; background: transparent; border: 1.5px solid var(--teal-dark); border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--teal-dark); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .btn-csv:hover { background: var(--teal); border-color: var(--teal); color: var(--ink); }
+
   #results-container.list-view .concert-card { border-bottom: 1px solid var(--border); padding: 1.25rem 1.5rem; transition: background 0.15s; }
   #results-container.list-view .concert-card:hover { background: var(--cream); }
   .concert-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-  .concert-date-badge { background: var(--ink); color: var(--gold-light); font-family: 'Playfair Display', serif; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+  .concert-date-badge { background: var(--teal); color: var(--ink); font-family: 'Playfair Display', serif; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
   .concert-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); flex: 1; }
   .concert-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .works-list { margin-top: 0.5rem; }
   .work-item { display: flex; gap: 0.75rem; padding: 0.2rem 0; font-size: 0.85rem; align-items: baseline; }
-  .work-composer { color: var(--rust); font-weight: 500; min-width: 140px; font-size: 0.8rem; }
-  .season-tag { font-size: 0.7rem; background: var(--gold-light); color: var(--ink); padding: 0.1rem 0.4rem; border-radius: 2px; margin-left: auto; }
+  .work-composer { color: var(--orange); font-weight: 500; min-width: 140px; font-size: 0.8rem; }
+  .season-tag { font-size: 0.7rem; background: var(--magenta-light); color: var(--magenta); padding: 0.1rem 0.5rem; border-radius: 2px; margin-left: auto; font-weight: 500; }
+
   #results-container.compact-view { padding: 0.5rem 1.5rem; }
   #results-container.compact-view .concert-card { border-bottom: 1px solid var(--border); padding: 0.5rem 0; display: grid; grid-template-columns: 130px 1fr 180px; gap: 0.75rem; align-items: center; font-size: 0.83rem; transition: background 0.15s; }
   #results-container.compact-view .concert-card:hover { background: var(--cream); padding-left: 0.5rem; }
@@ -61,16 +81,26 @@
   #results-container.compact-view .works-summary { color: var(--ink); }
   #results-container.compact-view .conductor-compact { color: var(--muted); font-size: 0.78rem; text-align: right; }
   #results-container.compact-view .concert-header, #results-container.compact-view .concert-meta, #results-container.compact-view .works-list { display: none; }
+
   .empty-state { text-align: center; padding: 5rem 2rem; color: var(--muted); }
   .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+
   .pagination { display: flex; justify-content: center; align-items: center; gap: 0.5rem; padding: 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
   .page-btn { padding: 0.4rem 0.8rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; cursor: pointer; color: var(--ink); transition: all 0.15s; }
-  .page-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .page-btn.active { background: var(--ink); border-color: var(--ink); color: var(--gold-light); }
+  .page-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+  .page-btn.active { background: var(--ink); border-color: var(--ink); color: var(--teal-light); }
   .page-btn:disabled { opacity: 0.4; cursor: default; }
   .page-info { font-size: 0.82rem; color: var(--muted); }
+
   footer { text-align: center; padding: 2rem; font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--cream); }
-  @media (max-width: 700px) { .search-bar { padding: 1rem; } .dashboard-grid { grid-template-columns: repeat(2, 1fr); } .meta-controls { margin-left: 0; } #results-container.compact-view .concert-card { grid-template-columns: 100px 1fr; } #results-container.compact-view .conductor-compact { display: none; } }
+
+  @media (max-width: 700px) {
+    .search-bar { padding: 1rem; }
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+    .meta-controls { margin-left: 0; }
+    #results-container.compact-view .concert-card { grid-template-columns: 100px 1fr; }
+    #results-container.compact-view .conductor-compact { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -149,11 +179,8 @@ function groupIntoConcerts(rows) {
       });
     }
   }
-  // Convert Sets to arrays for use in rendering
   const concerts = Array.from(map.values()).map(c => ({
-    ...c,
-    conductors: [...c.conductors],
-    soloistSet: c.soloistSet
+    ...c, conductors: [...c.conductors], soloistSet: c.soloistSet
   }));
   return concerts.sort((a,b) => b.date.localeCompare(a.date));
 }
