@@ -41,6 +41,7 @@
   .meta-select { padding: 0.3rem 1.6rem 0.3rem 0.5rem; border: 1.5px solid var(--border); border-radius: 4px; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--ink); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%237a6e5f'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.4rem center; }
   .meta-select:focus { outline: none; border-color: var(--gold); }
   .view-toggle { display: flex; gap: 0.4rem; }
+  .meta-pipe { color: var(--border); font-size: 0.9rem; margin: 0 2px; }
   .view-btn { background: none; border: 1.5px solid var(--border); border-radius: 4px; padding: 0.3rem 0.6rem; cursor: pointer; color: var(--muted); font-size: 0.8rem; transition: all 0.15s; }
   .view-btn.active { background: var(--ink); border-color: var(--ink); color: var(--gold-light); }
   #results-container.list-view .concert-card { border-bottom: 1px solid var(--border); padding: 1.25rem 1.5rem; transition: background 0.15s; }
@@ -96,7 +97,6 @@
   <select id="filter-conductor" onchange="applyFilters()"><option value="">All Conductors</option></select>
   <select id="filter-location" onchange="applyFilters()"><option value="">All Venues</option></select>
   <button class="btn-clear" onclick="clearFilters()">Clear</button>
-  <button class="btn-csv" onclick="downloadCSV()">&#8595; CSV</button>
 </div>
 <div class="results-meta">
   <span id="results-count">Loading&hellip;</span>
@@ -118,6 +118,8 @@
       <button class="view-btn active" id="btn-list" onclick="setView('list')">&#9776; Detailed</button>
       <button class="view-btn" id="btn-compact" onclick="setView('compact')">&#9632; Compact</button>
     </div>
+    <span class="meta-pipe">|</span>
+    <button class="btn-csv" onclick="downloadCSV()">&#8595; CSV</button>
   </div>
 </div>
 <div id="results-container" class="list-view"></div>
@@ -198,7 +200,13 @@ function populateFilters() {
   const sc = document.getElementById('filter-conductor');
   conductors.forEach(function(v){ const o=document.createElement('option'); o.value=v; o.textContent=v; sc.appendChild(o); });
   const sl = document.getElementById('filter-location');
-  locations.forEach(function(v){ const o=document.createElement('option'); o.value=v; o.textContent=v; sl.appendChild(o); });
+  locations.forEach(function(v){
+    const o=document.createElement('option'); o.value=v;
+    let label = v.replace(/\s*\([^)]*\)/g, '').trim();
+    if (label.indexOf('Adrienne Arsht') !== -1) label = 'Adrienne Arsht Center';
+    if (label.indexOf('Case Western') !== -1) label = 'Case Western Reserve University';
+    o.textContent = label; sl.appendChild(o);
+  });
 }
 
 let currentView = 'list';
