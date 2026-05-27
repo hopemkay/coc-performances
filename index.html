@@ -95,11 +95,65 @@
   footer { text-align: center; padding: 2rem; font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--cream); }
 
   @media (max-width: 700px) {
-    .search-bar { padding: 1rem; }
-    .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-    .meta-controls { margin-left: 0; }
-    #results-container.compact-view .concert-card { grid-template-columns: 100px 1fr; }
+    /* Dashboard - single scrollable row */
+    .dashboard { padding: 1.25rem 1rem; }
+    .dashboard-grid {
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      overflow-x: auto;
+      gap: 0.4rem;
+      padding-bottom: 0.25rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .stat-card { padding: 0.75rem 0.5rem; }
+    .stat-number { font-size: 1.5rem; }
+    .stat-label { font-size: 0.65rem; }
+    .stat-note { font-size: 0.6rem; }
+
+    /* Filters - collapse behind toggle */
+    .search-bar { padding: 0.75rem 1rem; flex-direction: column; gap: 0.5rem; }
+    .search-input-wrap { width: 100%; min-width: unset; }
+    .filter-toggle-btn {
+      width: 100%; padding: 0.6rem 1rem; background: var(--white);
+      border: 1.5px solid var(--border); border-radius: 4px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      color: var(--ink); cursor: pointer; text-align: left;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .filter-toggle-btn .arrow { transition: transform 0.2s; }
+    .filter-toggle-btn.open .arrow { transform: rotate(180deg); }
+    .filters-collapsible { display: none; width: 100%; flex-direction: column; gap: 0.5rem; }
+    .filters-collapsible.open { display: flex; }
+    .search-bar select { width: 100%; min-width: unset; }
+    .btn-clear { width: 100%; text-align: center; }
+
+    /* Results meta */
+    .results-meta { padding: 0.75rem 1rem; font-size: 0.85rem; }
+    .meta-controls { margin-left: 0; width: 100%; gap: 0.5rem; }
+    .meta-label { font-size: 0.82rem; }
+    .meta-select { font-size: 0.82rem; }
+    .view-btn { font-size: 0.82rem; padding: 0.35rem 0.7rem; }
+    .btn-csv { font-size: 0.82rem; padding: 0.35rem 0.7rem; }
+
+    /* Concert cards */
+    .concert-date-badge { font-size: 0.82rem; padding: 0.3rem 0.7rem; }
+    .concert-title { font-size: 1.05rem; }
+    .concert-meta { font-size: 0.85rem; gap: 0.75rem; }
+    .work-item { font-size: 0.9rem; }
+    .work-composer { font-size: 0.85rem; min-width: 120px; }
+    .season-tag { font-size: 0.75rem; }
+
+    /* Compact view */
+    #results-container.compact-view .concert-card { grid-template-columns: 110px 1fr; font-size: 0.88rem; }
     #results-container.compact-view .conductor-compact { display: none; }
+
+    /* Pagination */
+    .page-btn { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+    .page-info { font-size: 0.85rem; }
+
+    /* Header */
+    header { padding: 1.75rem 1rem 1.5rem; }
+    header h1 { font-size: 1.8rem; }
+    .header-sub { font-size: 0.75rem; }
   }
 </style>
 </head>
@@ -123,10 +177,16 @@
     <span class="search-icon">&#128269;</span>
     <input type="text" id="search-text" placeholder="Search composer, work, soloist, conductor…" oninput="applyFilters()">
   </div>
-  <select id="filter-season" onchange="applyFilters()"><option value="">All Seasons</option></select>
-  <select id="filter-conductor" onchange="applyFilters()"><option value="">All Conductors</option></select>
-  <select id="filter-location" onchange="applyFilters()"><option value="">All Venues</option></select>
-  <button class="btn-clear" onclick="clearFilters()">Clear</button>
+  <button class="filter-toggle-btn" id="filter-toggle" onclick="toggleFilters()">
+    <span id="filter-toggle-label">Filters</span>
+    <span class="arrow">&#9660;</span>
+  </button>
+  <div class="filters-collapsible" id="filters-collapsible">
+    <select id="filter-season" onchange="applyFilters()"><option value="">All Seasons</option></select>
+    <select id="filter-conductor" onchange="applyFilters()"><option value="">All Conductors</option></select>
+    <select id="filter-location" onchange="applyFilters()"><option value="">All Venues</option></select>
+    <button class="btn-clear" onclick="clearFilters()">Clear</button>
+  </div>
 </div>
 <div class="results-meta">
   <span id="results-count">Loading&hellip;</span>
@@ -294,6 +354,7 @@ function applyFilters() {
   }
   sortedConcerts = sortConcerts(filteredConcerts);
   currentPage = 1;
+  updateFilterToggleLabel();
   renderPage();
 }
 
@@ -411,6 +472,23 @@ function downloadCSV() {
   URL.revokeObjectURL(url);
 }
 
+
+function toggleFilters() {
+  const btn = document.getElementById('filter-toggle');
+  const panel = document.getElementById('filters-collapsible');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+function updateFilterToggleLabel() {
+  const season = document.getElementById('filter-season').value;
+  const conductor = document.getElementById('filter-conductor').value;
+  const location = document.getElementById('filter-location').value;
+  const count = [season, conductor, location].filter(Boolean).length;
+  const label = document.getElementById('filter-toggle-label');
+  if (label) label.textContent = count > 0 ? 'Filters (' + count + ' active)' : 'Filters';
+}
 </script>
 </body>
 </html>
